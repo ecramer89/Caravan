@@ -11,9 +11,7 @@ public class DesertState : MonoBehaviour
 		public GameObject movingExplorer;
 		//public GameObject rotatingTile;
 		public GameObject playerWhoseTurnItIs;
-
-	    
-
+		
 
 		//when movement ends, if the mover was a desert explorer
 		//force him to |end| movement on a tile.

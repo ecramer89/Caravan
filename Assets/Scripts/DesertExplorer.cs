@@ -16,6 +16,7 @@ public class DesertExplorer : MonoBehaviour
 		//returns to the source (it should be the last call of "end exploration")
 		Collection<GameObject> eventsExperiencedThisExploration;
 		Dictionary<DesertGenerator.GoodItem, bool> hasCollectedGoodThisExploration;
+		string goodsAcquiredAsString = "";
 		GameObject lastGoodAcquired;
 		GameObject lastEventExperienced;
 		public Vector3 bazaarPosition;
@@ -26,6 +27,7 @@ public class DesertExplorer : MonoBehaviour
 		public bool missNextTurn = false;
 		public static Vector3 movingSize;
 		public static Vector3 defaultSize;
+		MeepleInventory goodsInventory;
 	
 		void Start ()
 		{
@@ -36,6 +38,10 @@ public class DesertExplorer : MonoBehaviour
 
 				eventsExperiencedThisExploration = new Collection<GameObject> ();
 				initializeGoodItemRecord ();
+
+				goodsInventory = GameObject.Find ("MeepleInventory").GetComponent<MeepleInventory> ();
+
+				
 		}
 
 		void initializeGoodItemRecord ()
@@ -77,6 +83,7 @@ public class DesertExplorer : MonoBehaviour
 				foreach (DesertGenerator.GoodItem goodItem in (DesertGenerator.GoodItem[])Enum.GetValues (typeof(DesertGenerator.GoodItem))) {
 						hasCollectedGoodThisExploration [goodItem] = false;
 				}
+				goodsAcquiredAsString = "";
 		}
 
 		public void leaveCurrentTile ()
@@ -118,7 +125,7 @@ public class DesertExplorer : MonoBehaviour
 				currentPos = currentTile.GetComponent<DesertTile> ().enterTile (gameObject);
 				currentPos.z = 1;
 				GetComponent<Transform> ().position = currentPos;
-				GameObject.Find ("GameController").GetComponent<GameController> ().LogEvent ("Enter tile," +getId ()+ getTileInformation ());
+				GameObject.Find ("GameController").GetComponent<GameController> ().LogEvent ("Enter tile," + getId () + getTileInformation ());
 		
 		}
 
@@ -182,9 +189,10 @@ public class DesertExplorer : MonoBehaviour
 	
 		void Update ()
 		{         
-				if (moving () || flyingMagicCarpet ())
+				if (moving () || flyingMagicCarpet ()) {
 						graphicallyIndicateMoveState ();
-				else
+						showGoodsAcquired ();
+				} else
 						stopFlashing ();
 
 				if (!Event.anEventIsHappeningInGeneral && moving ()) {
@@ -193,6 +201,24 @@ public class DesertExplorer : MonoBehaviour
 								handleSuccessfulMove (newLocation);
 				}
 				maintainPosition ();
+		}
+
+		void showGoodsAcquired ()
+		{
+				goodsInventory.enabled = true;
+				goodsInventory.goodsAcquiredOfMovingExplorer.text = goodsAcquiredAsString;
+		}
+
+		void updateGoodsAcquiredAsString ()
+		{
+				goodsAcquiredAsString = "";
+				foreach (DesertGenerator.GoodItem gi in hasCollectedGoodThisExploration.Keys) {
+						if (hasCollectedGoodThisExploration [gi])
+								goodsAcquiredAsString += gi+" ";
+				}
+
+
+
 		}
 		
 		void maintainPosition ()
@@ -221,8 +247,9 @@ public class DesertExplorer : MonoBehaviour
 		}
 
 		void closeMovement ()
-		{
+		{       
 				preventThisExplorerFromMovingAgainThisRound ();
+				goodsInventory.wipeGoodsAcquiredText ();
 				//decrementPlayersMoveableExplorers ();
 				GetComponent<Transform> ().localScale = defaultSize;
 		}
@@ -309,6 +336,7 @@ public class DesertExplorer : MonoBehaviour
 								return; 
 						addGoodToPlayerInventory (newLocation);
 						recordThatIHaveCollectedThisGood (newLocation);
+						updateGoodsAcquiredAsString ();
 				} else 
 						updateLocation (newLocation);
 		
@@ -324,6 +352,7 @@ public class DesertExplorer : MonoBehaviour
 		void recordThatIHaveCollectedThisGood (GameObject goodTile)
 		{
 				hasCollectedGoodThisExploration [goodTile.GetComponent<Good> ().good] = true;
+	
 		}
 
 		void addGoodToPlayerInventory (GameObject goodTile)
@@ -411,6 +440,7 @@ public class DesertExplorer : MonoBehaviour
 						} else 
 								return false;
 				}
+
 				//mercenary and tile does not have event
 				return true;
 		}
