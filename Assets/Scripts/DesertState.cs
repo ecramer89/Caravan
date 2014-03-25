@@ -40,7 +40,7 @@ public class DesertState : MonoBehaviour
 
 						movingObject = rotatingDesertTile;
 
-						GameObject.Find ("GameController").GetComponent<GameController> ().LogEvent ("Set tile to rotate " + getRotatingTileInformation ());
+						GameObject.Find ("GameController").GetComponent<GameController> ().LogEvent ("Set tile to rotate," + getRotatingTileInformation ());
 
 
 				}

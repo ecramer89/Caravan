@@ -52,7 +52,7 @@ public class DesertMovementController : Event
 					
 								explorer.GetComponent<Meeple> ().player.GetComponent<Player> ().moveableDesertExplorers++;
 						}
-						logExplorerData (explorer);
+						//logExplorerData (explorer);
 
 				}
 
@@ -94,7 +94,7 @@ public class DesertMovementController : Event
 
 	
 						player.GetComponent<Player> ().updateWhetherCanMoveAgainThisRound ();
-						logPlayerData (player);
+						//logPlayerData (player);
 			          
 						//weaker condition; based strictly on available water
 						//player.GetComponent<Player> ().canMoveAgainThisRound = player.GetComponent<PlayerInventory> ().waterAvailable ();

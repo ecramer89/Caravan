@@ -32,6 +32,8 @@ public class Barter : MonoBehaviour {
 
 			Object.Destroy (targetToken.gameObject);
 			Object.Destroy(offerToken.gameObject);
+		
+			controller.LogEvent ("barter,"+offerToken.good+"O,"+targetToken.good+"T,"+targetToken.player.gameObject.GetComponent<Player>().id+"V,");
 
 	
 

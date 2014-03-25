@@ -28,6 +28,7 @@ public class DesertExplorer : MonoBehaviour
 		public static Vector3 movingSize;
 		public static Vector3 defaultSize;
 		MeepleInventory goodsInventory;
+	public Sprite meepleSprite;
 	
 		void Start ()
 		{

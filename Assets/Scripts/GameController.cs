@@ -26,6 +26,10 @@ public class GameController : MonoBehaviour {
 
 	public int firstPlayerIndex = 0;
 
+	bool firstTurn;
+
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -36,8 +40,9 @@ public class GameController : MonoBehaviour {
 
 		DealPublicCards ();
 
-	
+		firstTurn = true;
 		BeginPlacementPhase ();
+
 
 	
 
@@ -53,6 +58,10 @@ public class GameController : MonoBehaviour {
 	public void BeginPlacementPhase() {
 		currentPhase = "Placement";
 		LogEvent("started!");
+	
+		logPublicCardsRecord ();
+
+
 		indexOfNextPlayer = 0;
 
 		foreach (Meeple meeple in GameObject.FindObjectsOfType<Meeple>()) {
@@ -85,8 +94,7 @@ public class GameController : MonoBehaviour {
 			GameObject card = deck.Pop ();
 			public_cards.Add(card);
 			iTween.MoveTo (card, deckLocation +  Vector3.right * 27 + Vector3.left * i * 10 + Vector3.down * 43, 1.0f);
-			string cardRecord="public card,"+card.GetComponent<MerchantCard> ().first_good + "," + card.GetComponent<MerchantCard> ().second_good + "," + card.GetComponent<MerchantCard> ().third_good + ",";
-			LogEvent (cardRecord);
+
 		
 		}
 	}
@@ -257,6 +265,14 @@ public class GameController : MonoBehaviour {
 
 	}
 
+	void logPublicCardsRecord(){
+		foreach (GameObject card in public_cards) {
+						string cardRecord = "public card," + card.GetComponent<MerchantCard> ().first_good + "," + card.GetComponent<MerchantCard> ().second_good + "," + card.GetComponent<MerchantCard> ().third_good;
+						LogEvent (cardRecord);
+				}
+
+	}
+
 	//thanks http://stackoverflow.com/questions/5057567/how-to-do-logging-in-c
 	public void LogEvent(string message) {
 		// Write the string to a file.append mode is enabled so that the log
@@ -274,12 +290,16 @@ public class GameController : MonoBehaviour {
 						List<string> elements = new List<string> ();
 						elements.Add (DateTime.Now.ToString ("u"));
 						elements.Add (DateTime.Now.Ticks.ToString ());
-						elements.Add (message);
+						
 
+			            elements.Add (message);
 
+			            //parser program assumes that player tag precedes these evets,
+			//just leave for now easier than splitting up the message into event and then player tag
 
 						//name
 						elements.Add (currentPlayer ().name);
+			         
 
 						//vp
 						elements.Add (inv.victory_points.ToString ());
@@ -289,6 +309,8 @@ public class GameController : MonoBehaviour {
 
 						//well_depth
 						elements.Add (inv.wellDepth.ToString ());
+
+			           
 
 						//goods 0-15
 

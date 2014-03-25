@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
 		public bool hasRotatedATileThisTurn = false;
 		public bool canMoveAgainThisRound = true;
 		public Collection<GameObject> exploringMeeples;
+	public Sprite meepleSprite;
 
 		void OnMouseUp ()
 		{

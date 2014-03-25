@@ -157,7 +157,7 @@ public class PlayerInventory : MonoBehaviour
 						controller.PlayerWon (gameObject.GetComponent<Player> ());
 				}
 
-				controller.LogEvent ("bought merchant card," + gameObject.GetComponent<Player> ().id + "," + victory_points);
+			
 
 		}
 
@@ -239,7 +239,7 @@ public class PlayerInventory : MonoBehaviour
 						goodTokens [good].Remove (token);
 						UnityEngine.Object.Destroy (token);
 
-						Debug.Log (amountOfEachGoodItem [good].ToString () + " " + good.ToString ());
+						
 				}
 		}
 

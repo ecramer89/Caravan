@@ -65,7 +65,7 @@ public class Invader : Event
 				GameObject tileOfVictim = explorer.GetComponent<DesertExplorer> ().currentTile;
 				gameObject.GetComponent<DesertExplorer> ().updateLocation (tileOfVictim);
 				string player = explorer.GetComponent<Meeple> ().player.GetComponent<Player> ().id;
-				eventMessage = eventMessage + player + ",";
+				eventMessage = eventMessage + player + "V,";
 
 		}
 

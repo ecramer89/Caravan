@@ -36,6 +36,7 @@ public class MeepleSource : DropLocation
 				Color colour = meeple.GetComponent<SpriteRenderer> ().color;
 				colour = GetComponent<SpriteRenderer> ().color;
 				meeple.GetComponent<SpriteRenderer> ().color = colour;
+		meeple.GetComponent<SpriteRenderer> ().sprite = player.GetComponent<Player> ().meepleSprite;
 
 				meeple.GetComponent<Meeple> ().id = "Meeple_"+colour+"_"+ numSpawned;
 		}
@@ -53,6 +54,7 @@ public class MeepleSource : DropLocation
 				SpawnMeeple ();
 				player.GetComponent<Player> ().meepleSource = gameObject;
 		label = "meeple_source_placement";
+
 		}
 	
 		void Update ()
