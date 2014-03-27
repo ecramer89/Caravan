@@ -4,7 +4,7 @@ using System.Collections;
 public class Robbery : Event
 {
 
-		public const int numbersThatLoseWater = 3;
+		public const int numbersThatLoseWater = 6;
 		public const int waterStolen = -1;
 		const string foundRobberMessage = "Robbers attack! Will they triumph???";
 		string wasRobbedMessage;
@@ -48,10 +48,12 @@ public class Robbery : Event
 				initializeEvent ();
 				wasRobbed = drawFromBagOfChance (numbersThatLoseWater);
 		
-		
-				hadEnoughWaterToTake = (explorer.GetComponent<Meeple> ().player.GetComponent<PlayerInventory> ().howMuchWaterAvailable () + waterStolen > -1);
+				int waterIfRobbed = explorer.GetComponent<Meeple> ().player.GetComponent<PlayerInventory> ().howMuchWaterAvailable () + waterStolen;
+				hadEnoughWaterToTake = waterIfRobbed > -1;
+				
+				Debug.Log (hadEnoughWaterToTake + " enough water " + waterIfRobbed);
 				wasRobbedMessage = (hadEnoughWaterToTake ? tookWaterMessage : missNextTurnMessage);
-				eventMessage = name +"," +(wasRobbed ? "rob successful" : "escaped ") + "," + (explorer.GetComponent<Meeple> ().player.GetComponent<PlayerInventory> ().availableWater + (wasRobbed ? waterStolen : 0));
+				eventMessage = name + "," + (wasRobbed ? "rob successful" : "escaped ") + "," + (explorer.GetComponent<Meeple> ().player.GetComponent<PlayerInventory> ().availableWater + (wasRobbed ? waterStolen : 0));
 
 		}
 	

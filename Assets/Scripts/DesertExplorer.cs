@@ -28,7 +28,7 @@ public class DesertExplorer : MonoBehaviour
 		public static Vector3 movingSize;
 		public static Vector3 defaultSize;
 		MeepleInventory goodsInventory;
-	public Sprite meepleSprite;
+		public Sprite meepleSprite;
 	
 		void Start ()
 		{
@@ -215,7 +215,7 @@ public class DesertExplorer : MonoBehaviour
 				goodsAcquiredAsString = "";
 				foreach (DesertGenerator.GoodItem gi in hasCollectedGoodThisExploration.Keys) {
 						if (hasCollectedGoodThisExploration [gi])
-								goodsAcquiredAsString += gi+" ";
+								goodsAcquiredAsString += gi + " ";
 				}
 
 
@@ -331,17 +331,21 @@ public class DesertExplorer : MonoBehaviour
 		}
 	
 		void handleSuccessfulMove (GameObject newLocation)
-		{          
+		{
+				decreaseAvailableWater ();
+
 				if (newLocation.GetComponent<Good> ()) {
 						if (haveAlreadyCollectedThisGood (newLocation))//(newLocation == lastGoodAcquired)
 								return; 
 						addGoodToPlayerInventory (newLocation);
 						recordThatIHaveCollectedThisGood (newLocation);
 						updateGoodsAcquiredAsString ();
+						//decreaseAvailableWater ();
+
 				} else 
 						updateLocation (newLocation);
 		
-				decreaseAvailableWater ();
+				//decreaseAvailableWater ();
 			
 		}
 

@@ -268,8 +268,11 @@ public class PlayerInventory : MonoBehaviour
 		public void changeAvailableWaterDuringMovement (int change)
 		{
 				changeAvailableWaterDuringPlacementPhase (change);
+
+		/*
 				if (!waterAvailable ())
 						gameObject.GetComponent<Player> ().closeExplorerMovementAndEndTurn ();
+						*/
 			
 		}
 
